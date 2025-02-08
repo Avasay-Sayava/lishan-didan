@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #feffd8;
+}
+
+#menu-spacer {
+  height: 70px;
+}
+
+menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #424242;
+  color: white;
+  display: flex;
+  direction: rtl;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5em;
+  padding: 1em;
+  height: 70px;
+  width: 100vw;
+}
+menu ul {
+  display: flex;
+  list-style: none;
+}
+menu ul li {
+  margin-right: 1em;
+}
+menu ul li a {
+  color: white;
+  text-decoration: none;
+}/*# sourceMappingURL=default.css.map */

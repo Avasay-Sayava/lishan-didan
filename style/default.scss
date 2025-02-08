@@ -1,0 +1,47 @@
+$menu-height: 70px;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #feffd8;
+}
+
+#menu-spacer {
+  height: $menu-height;
+}
+
+menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #424242;
+  color: white;
+  display: flex;
+  direction: rtl;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5em;
+  padding: 1em;
+  height: $menu-height;
+  width: 100vw;
+
+  ul {
+    display: flex;
+    list-style: none;
+
+    li {
+      margin-right: 1em;
+      a {
+        color: white;
+        text-decoration: none;
+      }
+    }
+  }
+}

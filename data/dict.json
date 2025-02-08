@@ -1,0 +1,49 @@
+[
+  {
+    "id": 0,
+    "lishan-didan": "אנא",
+    "romanization": "anaa",
+    "hebrew": ["אני"],
+    "english": ["I"],
+    "voice": []
+  },
+  {
+    "id": 1,
+    "lishan-didan": "הדיקא",
+    "romanization": "hadiqaa",
+    "hebrew": ["גינה"],
+    "english": ["graden"],
+    "voice": [
+      {
+        "path": "/margalit/1.mp3",
+        "actor": "מרגלית סאייר"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "lishan-didan": "גוצ'נא",
+    "romanization": "gočanaa",
+    "hebrew": ["מקל הליכה"],
+    "english": ["walking stick"],
+    "voice": [
+      {
+        "path": "/margalit/2.mp3",
+        "actor": "מרגלית סאייר"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "lishan-didan": "כפורה",
+    "romanization": "kaporee",
+    "hebrew": ["איום", "נורא"],
+    "english": ["terrible", "frightful"],
+    "voice": [
+      {
+        "path": "/margalit/3.mp3",
+        "actor": "מרגלית סאייר"
+      }
+    ]
+  }
+]
