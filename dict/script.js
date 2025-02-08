@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Fetch the JSON data
-  fetch("/data/dict.json")
+  fetch("../data/dict.json")
     .then((response) => response.json())
     .then((data) => {
       const table = document.querySelector("#main-container table");
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
             audio.title = voiceFile.actor; // Tooltip on hover
 
             const source = document.createElement("source");
-            source.src = "/voice" + voiceFile.path; // Use correct path
+            source.src = "../voice" + voiceFile.path; // Use correct path
             source.type = "audio/mpeg"; // Explicitly set the MIME type for MP3
             audio.appendChild(source);
 
