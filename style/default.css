@@ -28,7 +28,7 @@ menu {
   font-size: 1.5em;
   padding: 1em;
   height: 70px;
-  width: 100vw;
+  width: 100%;
 }
 menu ul {
   display: flex;

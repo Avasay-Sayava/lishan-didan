@@ -27,7 +27,7 @@ table tr td:last-child {
 }
 table tr th:not(:last-child),
 table tr td:not(:last-child) {
-  width: 25%;
+  width: 10%;
 }
 table tr th audio,
 table tr td audio {
@@ -37,4 +37,4 @@ table tr th {
   background-color: #f2f2f2;
   font-weight: bold;
   font-size: 1.5em;
-}/*# sourceMappingURL=dict.css.map */
+}/*# sourceMappingURL=word.css.map */

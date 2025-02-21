@@ -1,60 +1,89 @@
+import { grammar, data } from "../data/dict.js";
+
 document.addEventListener("DOMContentLoaded", function () {
-  // Fetch the JSON data
-  fetch("../data/dict.json")
-    .then((response) => response.json())
-    .then((data) => {
-      const table = document.querySelector("#main-container table");
+  const table = document.querySelector("#main-container table");
+  const baseData = data.filter(
+    (a) => a.base === a.id || a.type.id === grammar.types.pronoun.id
+  );
+  baseData.sort((a, b) => a.lishanDidan.localeCompare(b.lishanDidan));
 
-      // Loop through each entry in the JSON data
-      data.sort((a, b) => a["lishan-didan"].localeCompare(b["lishan-didan"])); // Sort by Lishan Didan
-      data.forEach((entry) => {
-        const row = document.createElement("tr");
+  const exampleRow = createRow(baseData[0]);
+  table.append(exampleRow);
+  const rowHeight = exampleRow.clientHeight;
+  exampleRow.remove();
 
-        // Add Lishan Didan
-        const lishanDidanCell = document.createElement("td");
-        lishanDidanCell.textContent = entry["lishan-didan"];
-        row.appendChild(lishanDidanCell);
+  const rowsPerBatch = Math.floor(window.innerHeight / rowHeight);
 
-        // Add Romanization
-        const romanizationCell = document.createElement("td");
-        romanizationCell.style.textAlign = "left";
-        romanizationCell.textContent = entry.romanization;
-        row.appendChild(romanizationCell);
+  var currentBatch = 0;
 
-        // Add Hebrew
-        const hebrewCell = document.createElement("td");
-        hebrewCell.textContent = entry.hebrew.join(", "); // Join multiple Hebrew words with a comma
-        row.appendChild(hebrewCell);
+  function loadBatch(batch) {
+    const start = batch * rowsPerBatch;
+    const end = Math.min((batch + 1) * rowsPerBatch, baseData.length);
 
-        // Add English
-        const englishCell = document.createElement("td");
-        englishCell.style.textAlign = "left";
-        englishCell.textContent = entry.english.join(", "); // Join multiple English words with a comma
-        row.appendChild(englishCell);
+    for (var i = start; i < end; i++) {
+      table.appendChild(createRow(baseData[i]));
+    }
+  }
 
-        // Add Voice (MP3 audio)
-        const voiceCell = document.createElement("td");
-        if (entry.voice && entry.voice.length > 0) {
-          entry.voice.forEach((voiceFile) => {
-            const audio = document.createElement("audio");
-            audio.controls = true; // Add playback controls (play, pause, volume)
-            audio.title = voiceFile.actor; // Tooltip on hover
+  loadBatch(currentBatch); // Load initial batch
 
-            const source = document.createElement("source");
-            source.src = "../voice" + voiceFile.path; // Use correct path
-            source.type = "audio/mpeg"; // Explicitly set the MIME type for MP3
-            audio.appendChild(source);
-
-            voiceCell.appendChild(audio);
-          });
-        } else {
-          voiceCell.textContent = "לא קיים שמע";
-        }
-        row.appendChild(voiceCell);
-
-        // Append the row to the table
-        table.appendChild(row);
-      });
-    })
-    .catch((error) => console.error("Error fetching JSON:", error));
+  window.addEventListener("scroll", function () {
+    // Check if near bottom
+    if (
+      window.innerHeight + window.scrollY >=
+      document.body.offsetHeight - rowsPerBatch * rowHeight
+    ) {
+      loadBatch(++currentBatch);
+    }
+  });
 });
+
+function createRow(entry) {
+  const row = document.createElement("tr");
+
+  // Add Lishan Didan
+  const lishanDidanCell = document.createElement("td");
+  const link = document.createElement("a");
+  link.href = "../word/?id=" + entry.id;
+  link.textContent = entry.lishanDidan;
+  lishanDidanCell.appendChild(link);
+  row.appendChild(lishanDidanCell);
+
+  // Add Romanization
+  const romanizationCell = document.createElement("td");
+  romanizationCell.style.textAlign = "left";
+  romanizationCell.textContent = entry.romanization;
+  row.appendChild(romanizationCell);
+
+  // Add Hebrew
+  const hebrewCell = document.createElement("td");
+  hebrewCell.textContent = entry.hebrew.join(", ");
+  row.appendChild(hebrewCell);
+
+  // Add English
+  const englishCell = document.createElement("td");
+  englishCell.style.textAlign = "left";
+  englishCell.textContent = entry.english.join(", ");
+  row.appendChild(englishCell);
+
+  // Add Voice (MP3 audio)
+  const voiceCell = document.createElement("td");
+  if (entry.voice && entry.voice.length > 0) {
+    entry.voice.forEach((voiceFile) => {
+      const audio = document.createElement("audio");
+      audio.controls = true;
+      audio.title = voiceFile.actor;
+
+      const source = document.createElement("source");
+      source.src = "../voice" + voiceFile.path;
+      source.type = "audio/mpeg";
+      audio.appendChild(source);
+
+      voiceCell.appendChild(audio);
+    });
+  } else {
+    voiceCell.textContent = "לא קיים שמע";
+  }
+  row.appendChild(voiceCell);
+  return row;
+}
